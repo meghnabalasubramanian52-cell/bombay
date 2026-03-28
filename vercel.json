@@ -1,0 +1,5 @@
+{
+  "version": 2,
+  "name": "bombay-maya-nagari",
+  "builds": [{ "src": "index.html", "use": "@vercel/static" }]
+}
