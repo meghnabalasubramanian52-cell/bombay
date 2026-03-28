@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bombay</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Crimson+Pro:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+<style>
+
+body::before {
+  content: '';
+  position: fixed;
+  width: 300%; height: 300%;
+  top: -100%; left: -100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: .045;
+  pointer-events: none;
+  z-index: 9999;
+  animation: grain 7s steps(10) infinite;
+  mix-blend-mode: multiply;
+}
+@keyframes grain {
+  0%,100%{transform:translate(0,0)} 20%{transform:translate(-2%,-2%)}
+  40%{transform:translate(-1%,2%)} 60%{transform:translate(2%,-1%)} 80%{transform:translate(1%,2%)}
+}
+
+:root {
+  --paper: #F4EFE6;
+  --ink:   #1C1510;
+  --red:   #B8351A;
+  --dim:   #8A7D70;
+  --rule:  rgba(28,21,16,.12);
+  --teal:  #0B2B34;
+  --cream: #EDE8DF;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--paper);
+  background-image:
+    radial-gradient(ellipse at 15% 35%, rgba(180,140,80,.07) 0%, transparent 60%),
+    radial-gradient(ellipse at 88% 75%, rgba(160,120,60,.05) 0%, transparent 55%);
+  color: var(--ink);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+.cursor {
+  width: 7px; height: 7px;
+  background: var(--red);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 10000;
+  transform: translate(-50%,-50%);
+  transition: width .25s ease, height .25s ease, opacity .25s ease;
+  mix-blend-mode: multiply;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity .9s ease, transform .9s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+.d1 { transition-delay: .13s; }
+.d2 { transition-delay: .26s; }
+
+/* ── Accent + Masthead ── */
+.accent-bar {
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--red) 25%, var(--red) 75%, transparent);
+}
+.masthead {
+  padding: .85rem 3rem;
+  border-bottom: 1px solid var(--ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .65rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* ── Hero ── */
+.hero { padding: 3rem 3rem 2.5rem; text-align: center; overflow: hidden; }
+.rule-heavy { height: 3px; background: var(--ink); margin-bottom: 1.5rem; }
+.rule-thin  { height: 1px; background: var(--ink); margin-top: 2rem; }
+
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-style: italic;
+  line-height: .88;
+  letter-spacing: -.025em;
+  white-space: nowrap;
+  animation: appear 1.2s cubic-bezier(.22,1,.36,1) both;
+}
+@keyframes appear {
+  from { opacity: 0; transform: translateY(24px); filter: blur(5px); }
+  to   { opacity: 1; transform: none; filter: none; }
+}
+.hero-edition {
+  margin-top: 1rem;
+  font-size: .62rem;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: var(--dim);
+  animation: appear 1s .2s both;
+}
+.hero-tagline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1rem, 2.2vw, 1.5rem);
+  color: var(--red);
+  margin-top: .5rem;
+  animation: appear 1s .35s both;
+}
+
+/* ── Ornament ── */
+.ornament {
+  display: flex; align-items: center; gap: 1rem;
+  max-width: 980px; margin: 0 auto; padding: 0 3rem;
+}
+.ornament::before,.ornament::after {
+  content: ''; flex: 1; height: 1px; background: var(--rule);
+}
+.ornament-glyph {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .8rem; color: var(--dim); letter-spacing: .4em;
+}
+
+/* ── Editorial ── */
+.editorial {
+  max-width: 980px; margin: 0 auto; padding: 4rem 3rem;
+  display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0 4rem;
+}
+.col-rule { background: var(--rule); }
+.col-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .62rem; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--red); padding-bottom: .9rem; border-bottom: 1px solid var(--rule); margin-bottom: 1.5rem;
+}
+.col h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-weight: 600;
+  font-size: clamp(1.5rem, 2.2vw, 2.1rem); line-height: 1.1; margin-bottom: 1.25rem;
+}
+.col p { font-size: 1.05rem; line-height: 1.9; margin-bottom: 1.1rem; }
+.col > p:first-of-type::first-letter {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.8em; font-weight: 600;
+  float: left; line-height: .75; margin-right: .08em; margin-top: .06em; color: var(--red);
+}
+.col em { font-family: 'Cormorant Garamond', serif; font-style: italic; }
+.ts {
+  display: block; font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+  color: var(--dim); margin: 1.5rem 0 .6rem; padding-top: 1.2rem; border-top: 1px solid var(--rule);
+}
+
+/* ── Bridge ── */
+.bridge {
+  background: var(--ink); color: var(--paper);
+  padding: 7rem 3rem; text-align: center; position: relative; overflow: hidden;
+}
+.bridge::before {
+  content: '\201C';
+  position: absolute; top: -2rem; left: 50%; transform: translateX(-50%);
+  font-family: 'Cormorant Garamond', serif; font-size: 22rem; line-height: 1;
+  color: var(--red); opacity: .055; pointer-events: none; user-select: none;
+}
+.bridge blockquote {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-weight: 300;
+  font-size: clamp(1.5rem, 3vw, 2.5rem); line-height: 1.45;
+  max-width: 760px; margin: 0 auto; position: relative;
+}
+.bridge cite {
+  display: block; font-family: 'Cormorant Garamond', serif;
+  font-style: normal; font-size: .62rem; letter-spacing: .25em;
+  text-transform: uppercase; color: rgba(244,239,230,.3); margin-top: 2rem; position: relative;
+}
+
+/* ── Sea ── */
+.sea { background: var(--teal); color: var(--cream); padding: 6rem 3rem; position: relative; overflow: hidden; }
+.sea-lines { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.sea-lines span {
+  position: absolute; left: -10%; width: 120%; height: 1px;
+  background: rgba(237,232,223,.05); animation: drift linear infinite;
+}
+.sea-lines span:nth-child(1){top:22%;animation-duration:20s;animation-delay:0s}
+.sea-lines span:nth-child(2){top:44%;animation-duration:26s;animation-delay:-8s}
+.sea-lines span:nth-child(3){top:63%;animation-duration:18s;animation-delay:-4s}
+.sea-lines span:nth-child(4){top:81%;animation-duration:23s;animation-delay:-11s}
+@keyframes drift {
+  0%,100%{transform:translateX(0) scaleY(1);opacity:.5}
+  50%{transform:translateX(4%) scaleY(2.5);opacity:1}
+}
+.sea-inner { max-width: 720px; margin: 0 auto; position: relative; }
+.sea-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .62rem; letter-spacing: .3em; text-transform: uppercase;
+  color: rgba(237,232,223,.3); margin-bottom: 2rem;
+}
+.sea h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-weight: 300;
+  font-size: clamp(2rem, 5vw, 3.8rem); line-height: 1.1; color: var(--cream); margin-bottom: 3rem;
+}
+.sea-entry { border-top: 1px solid rgba(237,232,223,.08); padding-top: 1.5rem; margin-bottom: 2.5rem; }
+.sea-entry .ts { color: rgba(237,232,223,.28); border-top: none; padding-top: 0; margin-top: 0; }
+.sea-entry p { font-size: 1.05rem; line-height: 1.9; color: rgba(237,232,223,.72); }
+.sea-wave {
+  margin: 2.5rem 0; height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(237,232,223,.18) 50%, transparent 100%);
+}
+
+/* ── Footer ── */
+footer {
+  padding: 1.5rem 3rem; border-top: 1px solid var(--rule);
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: var(--dim);
+}
+
+@media (max-width: 700px) {
+  .masthead span:nth-child(2) { display: none; }
+  .editorial { grid-template-columns: 1fr; padding: 3rem 1.5rem; }
+  .col-rule { display: none; }
+  .hero,.bridge,.sea { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .ornament { padding: 0 1.5rem; }
+  footer { flex-direction: column; gap: .5rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,body::before { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+  body { cursor: auto; }
+  .cursor { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="accent-bar"></div>
+
+<div class="masthead">
+  <span>Est. 1661</span>
+  <span>The City of Bombay &nbsp;·&nbsp; Maya Nagari</span>
+  <span>Vol. ∞</span>
+</div>
+
+<div class="hero">
+  <div class="rule-heavy"></div>
+  <h1 id="fitTitle">Bombay</h1>
+  <p class="hero-edition">19.0760°N &nbsp;·&nbsp; 72.8777°E &nbsp;·&nbsp; A City of Two Tempos</p>
+  <p class="hero-tagline">City of dreams. City of illusions.</p>
+  <div class="rule-thin"></div>
+</div>
+
+<div class="ornament"><span class="ornament-glyph">◆</span></div>
+
+<div class="editorial">
+  <div class="col reveal">
+    <p class="col-label">The Hustle</p>
+    <h3>The city that refuses to close</h3>
+    <p>A million people come each year with a specific hunger — the actor's headshot, the trader's calculation, the migrant's arithmetic. <em>Maya Nagari.</em> The city makes no promises. It just refuses to close.</p>
+    <span class="ts">BKC · 11pm</span>
+    <p>The office lights don't turn off. Someone in there is building a life that doesn't exist yet. Long hours are not sacrifice here — they are the language of ambition, spoken fluently, spoken first. Drive is not a virtue in Bombay. It is the entry requirement.</p>
+  </div>
+  <div class="col-rule reveal d1"></div>
+  <div class="col reveal d1">
+    <p class="col-label">The Slowness</p>
+    <h3>Between the noise,<br>Bombay exhales</h3>
+    <p>The smell before the rain hits Mahim. Salt and petrichor and something older — the sea remembering itself. For four months the Arabian Sea reclaims the city. Even dreams pause for the rain.</p>
+    <span class="ts">Worli Sea Face · 5:30am</span>
+    <p>Before the city wakes, the sea is already ancient. The koli have been pushing boats into it for a thousand years. The city rises behind them, indifferent and enormous — a skyline the sea has watched grow, stone by stone.</p>
+  </div>
+</div>
+
+<div class="ornament reveal"><span class="ornament-glyph">◆ &nbsp; ◆ &nbsp; ◆</span></div>
+
+<div class="bridge">
+  <blockquote class="reveal">"Exhausted faces going home from night shifts, hungry ones heading out. The local train holds both tempos at once — Bombay's oldest, most honest negotiation."</blockquote>
+  <cite class="reveal d1">Churchgate Fast &nbsp;·&nbsp; 6:47am</cite>
+</div>
+
+<section class="sea">
+  <div class="sea-lines"><span></span><span></span><span></span><span></span></div>
+  <div class="sea-inner">
+    <p class="sea-label reveal">The Arabian Sea</p>
+    <h3 class="reveal">The sea that<br>remembers everything</h3>
+    <div class="sea-entry reveal">
+      <span class="ts">Arabian Sea · 5:30am</span>
+      <p>Before the city wakes, the sea is already ancient. The koli have been pushing boats into it for a thousand years. The city rises behind them, indifferent and enormous.</p>
+    </div>
+    <div class="sea-wave reveal"></div>
+    <div class="sea-entry reveal d1">
+      <span class="ts">Monsoon · Marine Drive</span>
+      <p>For four months the sea reclaims Bombay. Waves crash the wall. The promenade empties. The city doesn't stop — it defers. Even ambitions pause. The city and the sea have an understanding no one else is party to.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>19.0760°N · 72.8777°E</span>
+  <span>Bombay, always</span>
+  <span>Est. 1661</span>
+</footer>
+
+<script>
+// Full-width title
+function fitTitle() {
+  const h1 = document.getElementById('fitTitle');
+  const target = document.documentElement.clientWidth * 0.92;
+  let size = 8;
+  h1.style.fontSize = size + 'vw';
+  while (h1.scrollWidth < target && size < 28) { size += 0.2; h1.style.fontSize = size + 'vw'; }
+  h1.style.fontSize = (size - 0.2) + 'vw';
+}
+fitTitle();
+window.addEventListener('resize', fitTitle);
+
+// Scroll reveals
+const io = new IntersectionObserver(
+  es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } }),
+  { threshold: 0.1 }
+);
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+// Cursor
+const cur = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
+});
+</script>
+</body>
+</html>
