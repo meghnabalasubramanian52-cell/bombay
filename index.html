@@ -221,6 +221,23 @@ body {
   background: linear-gradient(90deg, transparent 0%, rgba(237,232,223,.18) 50%, transparent 100%);
 }
 
+/* ── Bio ── */
+.bio {
+  max-width: 720px; margin: 0 auto; padding: 5rem 3rem;
+  text-align: center;
+}
+.bio-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .62rem; letter-spacing: .3em; text-transform: uppercase;
+  color: var(--red); margin-bottom: 2rem;
+}
+.bio p {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-weight: 300;
+  font-size: clamp(1.1rem, 2vw, 1.45rem); line-height: 1.75;
+  color: var(--ink);
+}
+
 /* ── Footer ── */
 footer {
   padding: 1.5rem 3rem; border-top: 1px solid var(--rule);
@@ -307,6 +324,11 @@ footer {
     </div>
   </div>
 </section>
+
+<div class="bio reveal">
+  <p class="bio-label">The City</p>
+  <p>Bombay is India's Finance Capital — the city where money moves, trends are born, and stories get told. It holds the country's financial markets, sets the rhythm of its fashion industry, and houses the media houses that shape the national conversation. For all its scale and ambition, Bombay stays rooted in the energy of the street — a city that earns its reputation every single day.</p>
+</div>
 
 <footer>
   <span>19.0760°N · 72.8777°E</span>
